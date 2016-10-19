@@ -9,6 +9,11 @@ UEV? -> gestion des interruptions
 
 
 ADC IN5 -> PA5 -> Index
+
+
+TIM : Encoder interface Mode (STM32_RM0008)
+You can obtain dynamic information (speed, acceleration, deceleration) by measuring the period between two encoder events using a second timer configured in
+capture mode.
 	
 
 	
