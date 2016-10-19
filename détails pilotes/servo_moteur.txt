@@ -1,0 +1,4 @@
+PA8 -> TIM1 CH1
+PB8 -> TIM4 CH3
+
+PWM
