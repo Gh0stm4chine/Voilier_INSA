@@ -1,8 +1,10 @@
 #ifndef ACCELERO_H
 #define ACCELERO_H
 
+#include "stm32f10x.h"
+
 /**
-*	Permet d'initialiser l'acceleromètre.
+*	Permet d'initialiser l'acceleromètre et de lancer l'aquisition de valeurs.
 **/
 void init_accelero();
 
