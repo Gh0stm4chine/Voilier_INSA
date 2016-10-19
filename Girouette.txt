@@ -1,0 +1,19 @@
+On utilise TIM3
+	TIM3 CH1 -> PA6 -> A
+	TIM3 CH2 -> PA7 -> B
+On doit utiliser le registre RCR qui permet de faire une boucle 
+(autant de fois qu'on veut donc infinie)
+	-> bits de 0 à 7
+
+UEV? -> gestion des interruptions
+
+
+ADC IN5 -> PA5 -> Index
+	
+
+	
+
+
+
+
+
