@@ -4,14 +4,16 @@
 #include "stm32f10x.h"
 
 /**
-*	Permet d'initialiser l'acceleromètre et de lancer l'aquisition de valeurs.
+* Permet d'initialiser l'acceleromètre et de lancer l'aquisition de valeurs.
+* @return La valeur 0 de l'acceleromètre
 **/
-void init_accelero();
+int init_accelero();
 
 /**
-* Permet de récupérer la valeur de l'inclinaison du bateau compris en 0 et 360 degrès.
-* Le bateau est parfaitement droit à 180 degrès.
+* Permet de déterminer si l'inclinaison du bateau est critique ou non.
+* @param zero : La valeur 0 de l'acceleromètre renvoyé par l'intialisation.
+* @return 1 si l'inclinaison est critique, 0 sinon
 **/
-float get_angle_accelero();
+int inclinaison_critique(int zero);
 
 #endif

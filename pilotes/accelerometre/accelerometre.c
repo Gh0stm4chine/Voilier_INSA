@@ -1,7 +1,7 @@
 #include "accelerometre.h"
 #include <math.h>
 
-void init_accelero() {
+int init_accelero() {
 	// Enable clock sur GPIOC
 	(RCC->APB2ENR)|= RCC_APB2ENR_IOPCEN;
 	// Analog input pour PC0 et PC1
@@ -11,27 +11,27 @@ void init_accelero() {
 	RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;
 	ADC1->CR2 |= ADC_CR2_ADON;
 	// L = 1
-	// qs1 = ch0
-	ADC1->CR2 |= ADC_CR2_ADON; // lancement conversion adc
+    ADC1->SQR3 |= 0xa;  // qs1 = ch10
+    
+    // Calibration
+    ADC1->CR2 |= ADC_CR2_ADON; // lancement conversion adc
+	while((ADC1->SR & ADC_SR_EOC) == 0) {
+		// bloquant
+	}
+	// baisse le flag
+	ADC1->SR &= ~ADC_SR_EOC;
+	return ADC1->DR & ADC_DR_DATA;
 }
 
-float get_angle_accelero() {
+int inclinaison_critique(int zero) {
+	ADC1->CR2 |= ADC_CR2_ADON; // lancement conversion adc
 	while((ADC1->SR & ADC_SR_EOC) == 0) {
 		// bloquant
 	}
 	// baisse le flag
 	ADC1->SR &= ~ADC_SR_EOC;
-	int x = ADC1->DR & ADC_DR_DATA;
+	float x = ADC1->DR & ADC_DR_DATA;
 	
-	ADC1->SQR3 |= 0b1; // qs1 = ch1
-	ADC1->CR2 |= ADC_CR2_ADON; // lancement conversion adc
-	while((ADC1->SR & ADC_SR_EOC) == 0) {
-		// bloquant
-	}
-	// baisse le flag
-	ADC1->SR &= ~ADC_SR_EOC;
-	int y = ADC1->DR & ADC_DR_DATA;
-	ADC1->SQR3 &= ~(0b1);  // qs1 = ch0
-	ADC1->CR2 |= ADC_CR2_ADON; // lancement conversion adc
-	return sqrt(x*x + y*y);
+    // 0.48V = 595
+	return (x < (zero - 297) || x > (zero + 297));
 }
